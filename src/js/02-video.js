@@ -6,26 +6,22 @@ const iframe = document.querySelector('iframe');
 
 const player = new Player(iframe);
 
-player.setCurrentTime(localStorage.getItem(TIME_KEY)) ?? true;
+//? при использовании Nullish coalescing operator (??) при билде выдает ошибку
+// player.setCurrentTime(localStorage.getItem(TIME_KEY)) ?? true;
+
+if (localStorage.getItem(TIME_KEY) === null || localStorage.getItem(TIME_KEY) === undefined) {
+  player.setCurrentTime(true);
+} else {
+  player.setCurrentTime(localStorage.getItem(TIME_KEY));
+}
 
 player.setMuted(true);
 
 player.on('timeupdate', throttle(timeLocalStorageHandler, 1000));
 
-// function timeLocalStorageHandler(data) {
-//   localStorage.setItem(TIME_KEY, data.seconds);
-//   localStorage.getItem(TIME_KEY);
-// }
-
 function timeLocalStorageHandler(data) {
   try {
     localStorage.setItem(TIME_KEY, data.seconds);
-  } catch (error) {
-    console.error('Get state error: ', error.message);
-  }
-
-  try {
-    localStorage.getItem(TIME_KEY);
   } catch (error) {
     console.error('Get state error: ', error.message);
   }
