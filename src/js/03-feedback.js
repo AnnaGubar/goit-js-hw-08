@@ -1,14 +1,21 @@
+import throttle from 'lodash.throttle';
+
 const formRef = document.querySelector('.feedback-form');
 const savedSettings = localStorage.getItem('feedback-form-state');
 const parsedSettings = JSON.parse(savedSettings);
 
-if (parsedSettings === null || parsedSettings === undefined) {
-  player.setCurrentTime(true);
-} else {
-  player.setCurrentTime(parsedSettings);
-}
+fillForm();
 
-formRef.addEventListener('input', addDataToLocalStorageHandler);
+formRef.addEventListener('input', throttle(addDataToLocalStorageHandler, 500));
+formRef.addEventListener('submit', clearFormHandler);
+
+function fillForm() {
+  if (savedSettings === null || savedSettings === undefined) return;
+  if (savedSettings !== null || savedSettings !== undefined) {
+    formRef.elements.email.value = parsedSettings.email;
+    formRef.elements.message.value = parsedSettings.message;
+  }
+}
 
 function addDataToLocalStorageHandler(e) {
   e.preventDefault();
@@ -18,7 +25,20 @@ function addDataToLocalStorageHandler(e) {
     email: email.value,
     message: message.value,
   };
-  console.log(data);
 
   localStorage.setItem('feedback-form-state', JSON.stringify(data));
+}
+
+function clearFormHandler(e) {
+  e.preventDefault();
+
+  console.log(parsedSettings);
+
+  // console.log({
+  //   email: formRef.elements.email.value,
+  //   message: formRef.elements.message.value,
+  // });
+
+  e.currentTarget.reset();
+  localStorage.removeItem('feedback-form-state');
 }
