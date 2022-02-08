@@ -19,8 +19,8 @@ function fillForm() {
 
 function addDataToLocalStorageHandler(e) {
   e.preventDefault();
-  // console.log(e.currentTarget);
 
+  //? выдает ошибку
   // const { email, message } = e.currentTarget;
   // const data = {
   //   email: email.value,
@@ -28,12 +28,11 @@ function addDataToLocalStorageHandler(e) {
   // };
 
   let data = {};
-  const formData = new FormData(formRef);
+  const formData = new FormData(formRef); // не работает с e.currentTarget
 
   formData.forEach((value, name) => {
     data[name] = value;
   });
-  // console.log(data);
 
   localStorage.setItem('feedback-form-state', JSON.stringify(data));
 }
