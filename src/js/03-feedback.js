@@ -19,12 +19,21 @@ function fillForm() {
 
 function addDataToLocalStorageHandler(e) {
   e.preventDefault();
+  // console.log(e.currentTarget);
 
-  const { email, message } = e.currentTarget;
-  const data = {
-    email: email.value,
-    message: message.value,
-  };
+  // const { email, message } = e.currentTarget;
+  // const data = {
+  //   email: email.value,
+  //   message: message.value,
+  // };
+
+  let data = {};
+  const formData = new FormData(formRef);
+
+  formData.forEach((value, name) => {
+    data[name] = value;
+  });
+  // console.log(data);
 
   localStorage.setItem('feedback-form-state', JSON.stringify(data));
 }
