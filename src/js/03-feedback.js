@@ -10,20 +10,20 @@ formRef.addEventListener('input', throttle(addDataToLocalStorageHandler, 500));
 formRef.addEventListener('submit', clearFormHandler);
 
 // при обновлении не сохраняет значения инпутов
-// function fillForm(savedSettings, parsedSettings) {
-//   if (savedSettings) {
-//     formRef.elements.email.value = parsedSettings.email;
-//     formRef.elements.message.value = parsedSettings.message;
-//   }
-// }
-
-function fillForm() {
-  if (savedSettings === null || savedSettings === undefined) return;
-  if (savedSettings !== null || savedSettings !== undefined) {
+function fillForm(savedSettings, parsedSettings) {
+  if (savedSettings) {
     formRef.elements.email.value = parsedSettings.email;
     formRef.elements.message.value = parsedSettings.message;
   }
 }
+
+// function fillForm() {
+//   if (savedSettings === null || savedSettings === undefined) return;
+//   if (savedSettings !== null || savedSettings !== undefined) {
+//     formRef.elements.email.value = parsedSettings.email;
+//     formRef.elements.message.value = parsedSettings.message;
+//   }
+// }
 
 function addDataToLocalStorageHandler(e) {
   e.preventDefault();
