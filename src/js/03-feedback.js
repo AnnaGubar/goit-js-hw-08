@@ -9,6 +9,14 @@ fillForm();
 formRef.addEventListener('input', throttle(addDataToLocalStorageHandler, 500));
 formRef.addEventListener('submit', clearFormHandler);
 
+// при обновлении не сохраняет значения инпутов
+// function fillForm(savedSettings, parsedSettings) {
+//   if (savedSettings) {
+//     formRef.elements.email.value = parsedSettings.email;
+//     formRef.elements.message.value = parsedSettings.message;
+//   }
+// }
+
 function fillForm() {
   if (savedSettings === null || savedSettings === undefined) return;
   if (savedSettings !== null || savedSettings !== undefined) {
@@ -20,7 +28,7 @@ function fillForm() {
 function addDataToLocalStorageHandler(e) {
   e.preventDefault();
 
-  //? выдает ошибку
+  // выдает ошибку
   // const { email, message } = e.currentTarget;
   // const data = {
   //   email: email.value,
@@ -28,8 +36,8 @@ function addDataToLocalStorageHandler(e) {
   // };
 
   let data = {};
-  const formData = new FormData(formRef); // не работает с e.currentTarget
-
+  // const formData = new FormData(e.currentTarget); // выдает ошибку
+  const formData = new FormData(formRef);
   formData.forEach((value, name) => {
     data[name] = value;
   });
