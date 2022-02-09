@@ -9,8 +9,9 @@ const player = new Player(iframe);
 //? при использовании Nullish coalescing operator (??) при билде выдает ошибку
 // player.setCurrentTime(localStorage.getItem(TIME_KEY)) ?? true;
 
+//при первом запуске плеера localStorage.getItem(TIME_KEY) === null
 if (localStorage.getItem(TIME_KEY) === null || localStorage.getItem(TIME_KEY) === undefined) {
-  player.setCurrentTime(true);
+  player.setCurrentTime(0);
 } else {
   player.setCurrentTime(localStorage.getItem(TIME_KEY));
 }
